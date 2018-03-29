@@ -1,7 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
-	
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.spellchecker.controller.SpellCheckerController">
-	<!-- TODO Add Nodes -->
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.spellchecker.controller.SpellCheckerController">
+   <top>
+      <Label text="Lab3_SpellChecker" BorderPane.alignment="CENTER" />
+   </top>
+   <center>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <HBox>
+               <children>
+                  <Label text="Choose the language:" />
+                  <ComboBox fx:id="cmbBxLingue" />
+               </children>
+            </HBox>
+            <TextArea fx:id="txtTextArea" />
+            <HBox alignment="CENTER_RIGHT">
+               <children>
+                  <Button fx:id="btnSpellCheck" alignment="CENTER" mnemonicParsing="false" onAction="#doSpellCheck" text="Spell Check" />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label fx:id="lblWrongWords" text="Wrong words" />
+               </children>
+            </HBox>
+            <TextArea fx:id="txtErrorsArea" />
+            <HBox alignment="CENTER_RIGHT">
+               <children>
+                  <Label fx:id="lblTextErrors" text="The text contains .. errors" textFill="RED" />
+                  <Button fx:id="btnClearText" mnemonicParsing="false" onAction="#doClearText" text="Clear Text" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <Label fx:id="lblCompletedInSec" text="Spell check completed in..." BorderPane.alignment="CENTER_LEFT" />
+   </bottom>
 </BorderPane>
