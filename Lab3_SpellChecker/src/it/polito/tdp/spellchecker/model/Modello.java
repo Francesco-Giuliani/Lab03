@@ -7,8 +7,8 @@ import java.util.*;
 
 public class Modello {
 
-	private List<String> listaLingue = new LinkedList<String>(); //TODO CERCA DIFFERENZA FRA LINKED E ARRAY LIST
-	private List<Dizionario> listaDizionari = new LinkedList<Dizionario>();
+	private List<String> listaLingue = new ArrayList<String>(); //TODO CERCA DIFFERENZA FRA LINKED E ARRAY LIST
+	private List<Dizionario> listaDizionari = new ArrayList<Dizionario>();
 	private List<String> listaErrori = new LinkedList<String>();
 	private String testo;
 	private String lingua;
@@ -29,6 +29,7 @@ public class Modello {
 		this.testo =this.testo.replace("\t", " ");
 		this.testo = this.testo.replaceAll("[.,\\/#!$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", "");
 		this.testo =this.testo.replaceAll("\\?", "");
+		this.testo =this.testo.replaceAll("'", "");
 		this.testo=this.testo.replaceAll("  ", " ");
 	}
 	
