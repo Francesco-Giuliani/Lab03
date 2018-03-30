@@ -62,7 +62,7 @@ public class Modello {
 				String parola = arrTesto[i].trim(); //elimino eventuali ulteriori spazi dalle parole
 				if(!giaControllate.contains(parola)) {
 					//fai il check
-					if(dizionarioSelezionato.getListaParole().contains(parola))
+					if(dizionarioSelezionato.dichotomicContains(parola))
 						giaControllate.add(parola);
 					else
 						listaParoleSbagliate.add(parola);
