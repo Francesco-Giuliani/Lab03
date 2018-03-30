@@ -9,7 +9,7 @@ public class Modello {
 
 	private List<String> listaLingue = new ArrayList<String>(); //TODO CERCA DIFFERENZA FRA LINKED E ARRAY LIST
 	private List<Dizionario> listaDizionari = new ArrayList<Dizionario>();
-	private List<String> listaErrori = new LinkedList<String>();
+	private List<String> listaErrori = new ArrayList<String>();
 	private String testo;
 	private String lingua;
 	
@@ -42,7 +42,7 @@ public class Modello {
 	 * @return listaParoleSbagliate
 	 * @throws DizionarioVuotoException 
 	 */
-	public LinkedList<String> spellCheck() throws DizionarioVuotoException {
+	public List<String> spellCheck() throws DizionarioVuotoException {
 		
 		try {
 				
@@ -53,8 +53,8 @@ public class Modello {
 			
 			Dizionario dizionarioSelezionato = this.caricaDizionario(lingua);
 			String[] arrTesto;
-			LinkedList<String> listaParoleSbagliate = new LinkedList<String>();
-			LinkedList<String> giaControllate = new LinkedList<String>();
+			List<String> listaParoleSbagliate = new ArrayList<String>();
+			List<String> giaControllate = new ArrayList<String>();
 			
 			this.preparaTesto();
 			arrTesto = testo.split(" ");
@@ -63,7 +63,7 @@ public class Modello {
 				String parola = arrTesto[i].trim(); //elimino eventuali ulteriori spazi dalle parole
 				if(!giaControllate.contains(parola)) {
 					//fai il check
-					if(dizionarioSelezionato.getListaParole().contains(parola))
+					if(dizionarioSelezionato.dichotomicContains(parola))
 						giaControllate.add(parola);
 					else
 						listaParoleSbagliate.add(parola);

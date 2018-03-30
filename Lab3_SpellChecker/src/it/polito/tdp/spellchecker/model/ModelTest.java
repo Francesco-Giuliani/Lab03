@@ -7,8 +7,8 @@ public class ModelTest {
 		Modello mod = new Modello();
 		
 		mod.setLingua("Italian");
-		mod.setTesto("Ciodede a tutti!");
-		
+		mod.setTesto("Ciao mamma,\ncome stai?");
+		mod.spellCheck();
 		System.out.println(mod.listaErroriToString());
 		
 		//System.out.println("Tempo di esecuzione: "+mod.()+" s");
