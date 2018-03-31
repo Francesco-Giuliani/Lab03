@@ -1,15 +1,12 @@
 package it.polito.tdp.spellchecker.model;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+
 import java.util.*;
 
 public class Modello {
 
 	private List<String> listaLingue = new ArrayList<String>(); //TODO CERCA DIFFERENZA FRA LINKED E ARRAY LIST
-	private List<Dizionario> listaDizionari = new ArrayList<Dizionario>();
-	private List<String> listaErrori = new LinkedList<String>();
+	private List<DizionarioIndicizzato> listaDizionari = new ArrayList<DizionarioIndicizzato>();
+	private List<String> listaErrori = new ArrayList<String>();
 	private String testo;
 	private String lingua;
 	
@@ -51,7 +48,7 @@ public class Modello {
 			if(this.testo == null)
 				throw new NessunTestoSelezionatoException();
 			
-			Dizionario dizionarioSelezionato = this.caricaDizionario(lingua);
+			DizionarioIndicizzato dizionarioSelezionato = this.caricaDizionario(lingua);
 			String[] arrTesto;
 			LinkedList<String> listaParoleSbagliate = new LinkedList<String>();
 			LinkedList<String> giaControllate = new LinkedList<String>();
@@ -62,8 +59,8 @@ public class Modello {
 			for(int i=0; i<arrTesto.length; i++) {
 				String parola = arrTesto[i].trim(); //elimino eventuali ulteriori spazi dalle parole
 				if(!giaControllate.contains(parola)) {
-					//fai il check
-					if(dizionarioSelezionato.getListaParole().contains(parola))
+					
+					if(dizionarioSelezionato.getListaParoleAIndice(parola.charAt(0)).contains(parola))
 						giaControllate.add(parola);
 					else
 						listaParoleSbagliate.add(parola);
@@ -92,36 +89,14 @@ public class Modello {
 	 * @throws DizionarioVuotoException 	
 	 */
 	
-	public Dizionario caricaDizionario(String nomeDizionario) throws DizionarioVuotoException {
-		Dizionario dizionario = new Dizionario(nomeDizionario);
+	public DizionarioIndicizzato caricaDizionario(String nomeDizionario) {
+		DizionarioIndicizzato dizionario = new DizionarioIndicizzato(nomeDizionario);
 		
 		if(!this.listaDizionari.contains(dizionario)) {
-			
-			String percorsoFile =  "C:\\Users\\96fra_000\\git\\Lab03\\Lab3_SpellChecker\\rsc\\"+nomeDizionario+".txt";
-			
-			try {
-				FileReader r = new FileReader(percorsoFile);
-				BufferedReader br = new BufferedReader(r);
-				String voceDiz;
-				while((voceDiz = br.readLine())!=null)
-					dizionario.getListaParole().add(voceDiz);
-				br.close();
-				r.close();				
-				
-				this.listaDizionari.add(dizionario);
-				return dizionario;				
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				System.out.println("Dizionario con il nome/lingua richiesta non presente in rsc come txt file.");
-				e.printStackTrace();
-			}catch( IOException ioe) {
-				//TODO
-				ioe.printStackTrace();
-			}
+			dizionario.caricaFile();
+			this.listaDizionari.add(dizionario);
+			return dizionario;
 		}
-		if(dizionario.getListaParole()==null)
-			throw new DizionarioVuotoException();
-		
 		return this.listaDizionari.get(this.listaDizionari.indexOf(dizionario));
 	}
 
@@ -141,7 +116,7 @@ public class Modello {
 		this.lingua = lingua;
 	}
 
-	public List<Dizionario> getListaDizionari() {
+	public List<DizionarioIndicizzato> getListaDizionari() {
 		return listaDizionari;
 	}
 	
